@@ -1,9 +1,22 @@
-import pic from "../../public/logo.png";
+import pic from "../../public/logo.jpg";
 import { TiThMenu } from "react-icons/ti";
 import { IoCloseSharp } from "react-icons/io5";
 import { useState } from "react";
 import { Link } from "react-scroll";
+
 const NavBar = () => {
+  const [isModalOpen, setIsModalOpen] = useState(false);
+
+  // Function to open the modal
+  const openModal = () => setIsModalOpen(true);
+
+  // Function to close the modal
+  const closeModal = () => setIsModalOpen(false);
+
+  // Function to disable right-click on the image
+  const disableRightClick = (e) => {
+    e.preventDefault();
+  };
   const [menuOpen, setMenuOpen] = useState(false);
   const navItems = [
     {
@@ -25,17 +38,31 @@ const NavBar = () => {
   ];
   return (
     <>
-      <div className="max-w-screen-2xl container mx-auto px-4 md:px-20 shadow-md h-16 fixed top-0 left-0 right-0 z-10 bg-white">
-        <div className="flex justify-between h-16 items-center ">
-          <div className="flex space-x-2">
-            <img src={pic} className="h-12 w-12 rounded-full" alt="" />
-            <h1 className="font-semibold text-3xl cursor-pointer">
-              <span className="text-green-500 text-4xl">INSIDE</span>
-              <span className="text-red-500 text-4xl"> HEDGE</span>
-            </h1>
+      <div className="max-w-screen-2xl container mx-auto px-4 md:px-20 shadow-md h-[75px] fixed top-0 left-0 right-0 z-10 bg-blue-950 border-b">
+        <div className="flex  justify-between h-[70px]  items-center">
+          <div className="flex space-x-2 items-center">
+            <img
+              src={pic}
+              className="h-16 w-16 rounded-full border-2 border-zinc-200 border-collapse mt-2 cursor-pointer"
+              alt="logo"
+              onClick={openModal}
+              onContextMenu={disableRightClick}
+            />
+            <div className="flex flex-col items-center">
+              <h1 className="font-semibold md:pt-2">
+                <span className="text-green-400 text-3xl md:text-4xl">
+                  INSIDE
+                </span>
+                <span className="text-red-600 text-3xl md:text-4xl">
+                  {" "}
+                  HEDGE
+                </span>
+              </h1>
+              <h3 className="text-white text-xs">A Step Towards Growth</h3>
+            </div>
           </div>
           <div>
-            <ul className="hidden  md:flex space-x-8">
+            <ul className="hidden  md:flex space-x-8  text-white">
               {navItems.map(({ id, text }) => (
                 <li
                   key={id}
@@ -53,7 +80,10 @@ const NavBar = () => {
                 </li>
               ))}
             </ul>
-            <div onClick={() => setMenuOpen(!menuOpen)} className="md:hidden">
+            <div
+              onClick={() => setMenuOpen(!menuOpen)}
+              className="md:hidden text-white"
+            >
               {menuOpen ? <IoCloseSharp size={24} /> : <TiThMenu size={24} />}
             </div>
           </div>
@@ -79,6 +109,26 @@ const NavBar = () => {
                 </li>
               ))}
             </ul>
+          </div>
+        )}
+        {isModalOpen && (
+          <div className="fixed inset-0 z-50 flex  items-center justify-center bg-black bg-opacity-80">
+            <div className="relative">
+              {/* Fullscreen logo */}
+              <img
+                src={pic}
+                alt="Full logo"
+                className="h-auto w-auto max-h-screen max-w-screen"
+                onContextMenu={disableRightClick}
+              />
+              {/* Cancel/Close button */}
+              <button
+                className="absolute top-4 right-4 bg-red-500 text-white p-2 rounded-full hover:bg-red-600 transition duration-300"
+                onClick={closeModal}
+              >
+                X
+              </button>
+            </div>
           </div>
         )}
       </div>

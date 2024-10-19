@@ -1,23 +1,17 @@
 import { Toaster } from "react-hot-toast";
-import About from "./components/About";
-import Contact from "./components/Contact";
-import Footer from "./components/Footer";
-import Home from "./components/Home";
-import NavBar from "./components/NavBar";
-import Services from "./components/Services";
+import All from "./All";
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import PremiumService from "./components/PremiumService";
 
 const App = () => {
   return (
     <>
-      <div>
-        <NavBar />
-        <Home />
-        <Contact />
-        <About />
-        <Services />
-
-        <Footer />
-      </div>
+      <Router>
+        <Routes>
+          <Route path="/" element={<All />} />
+          <Route path="/premium-service" element={<PremiumService />} />
+        </Routes>
+      </Router>
       <Toaster />
     </>
   );
